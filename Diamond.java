@@ -71,7 +71,7 @@ public class Diamond {
         }
     }
     
-    public void fillLines(int midPoint, int spaceToPut){
+    private void fillLines(int midPoint, int spaceToPut){
         String toPrint = "";
         for(int i=0;i<spaceToPut;i++){
             toPrint+=" ";
@@ -97,8 +97,54 @@ public class Diamond {
         }
     }
 
-    public static void main(String[] args){
+    public void printDiamond3(){
+        int midPoints = 1;
+        int i;
+        for(i=0;i<this.size && midPoints<=this.size;i++){
+            String printLine = "";
+            for(int j=0;j<this.size/2+1-i;j++){
+                printLine+=" ";
+            }
+            for(int j=0;j<midPoints;j++){
+                printLine+="*";
+            }
+            System.out.println(printLine);
+            midPoints+=2;
+            // System.out.println(i);
+        }
+        midPoints-=4;
+        // System.out.println(i);
+        for(;i>0 && midPoints>0;i--){
+            String printLine = "";
+            for(int j=0;j<Math.abs(this.size/2+3-i);j++){
+                printLine+=" ";
+            }
+            for(int j=0;j<midPoints;j++){
+                printLine+="*";
+            }
+            System.out.println(printLine);
+            midPoints-=2;
+        }
+    }
+
+    public void printDiamond4(){
+        int starCounts = 1;
+        int plusOrMinus = 2;
+        String printLine;
+        int spaceCount;
+        for(int i=0;i<this.size;i++){
+            printLine = "";
+            spaceCount = Math.abs(this.size/2+1-starCounts/2);
+            for(int j=0;j<spaceCount;j++) printLine+=" ";
+            for(int j=0;j<starCounts;j++) printLine+="*";
+            if(starCounts==this.size) plusOrMinus=-2;
+            starCounts+=plusOrMinus;
+            System.out.println(printLine);
+        }
+    }
+
+    public static void main(String[] args){ 
         Diamond newOb = new Diamond(7);
-        newOb.printDiamond2();
+        newOb.printDiamond4();
     }
 }
