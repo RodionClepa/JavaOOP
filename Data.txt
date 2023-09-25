@@ -1,0 +1,73 @@
+Facultatea Electronica si Telecomunicatii
+FET
+SOFTWARE_ENGINEERING
+[
+Rodion
+Clepa
+rodion@gmail.com
+2022-09-01
+2002-05-24
+false
+Ion
+Popescu
+popescu@gmail.com
+2021-08-11
+2003-04-13
+false
+Bruce
+Wayne
+bwayne@gmail.com
+2023-08-11
+2004-11-11
+false
+Bruce
+Wayne
+bwayne2@gmail.com
+2023-08-11
+2004-11-11
+false
+]
+Facultatea Energetica si Inginerie Electrica
+FIEE
+MECHANICAL_ENGINEERING
+[
+Bruce
+Wayne
+bwayne3@gmail.com
+2023-08-11
+2004-11-11
+false
+]
+Facultatea Tehnologia Alimentelor
+FTA
+FOOD_TECHNOLOGY
+[]
+Facultatea Inginerie Mecanica, Industriala si Transporturi
+FIMIT
+MECHANICAL_ENGINEERING
+[]
+Facultatea Urbanism si Arhitectura
+FUA
+URBANISM_ARCHITECTURE
+[]
+Facultatea Constructii, Geodezie si Cadastru
+FCGC
+URBANISM_ARCHITECTURE
+[
+Clark
+Kent
+kent@gmail.com
+2019-06-05
+2001-12-12
+false
+Johnny
+Depp
+depp@gmail.com
+2019-09-01
+2002-11-14
+true
+]
+Facultatea Calculatoare, Informatica si Microelectronica
+FCIM
+SOFTWARE_ENGINEERING
+[]

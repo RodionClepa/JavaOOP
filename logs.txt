@@ -1,0 +1,26 @@
+[2023-09-25 18:27:51]    INFO calling function createStudent VALUES(FCGC, Bruce, Wayne, bwayne@gmail.com, 2004-11-11, 2023-08-11)
+[2023-09-25 18:27:51]    WARN function createStudent -> New student added
+[2023-09-25 18:28:34]    INFO calling function createStudent VALUES(FCGC, Bruce, Wayne, bwayne2@gmail.com, 2004-11-11, 2023-08-11)
+[2023-09-25 18:28:34]    WARN function createStudent -> New student added
+[2023-09-25 18:28:53]    INFO calling function createStudent VALUES(FCGC, Bruce, Wayne, bwayne3@gmail.com, 2004-11-11, 2023-08-11)
+[2023-09-25 18:28:53]    WARN function createStudent -> New student added
+[2023-09-25 18:30:01]    INFO calling function printAllStudentsFacultyByStatus VALUES(FCGC, false)
+[2023-09-25 18:32:37]    INFO calling function createStudent VALUES(FCGC, Clark, Kent, kent@gmail.com, 2001-12-12, 2019-6-5)
+[2023-09-25 18:32:37]   ERROR function createStudent -> Invalid date format
+[2023-09-25 18:32:46]    INFO calling function createStudent VALUES(FCGC, Clark, Kent, kent@gmail.com, 2001-12-12, 2019-06-05)
+[2023-09-25 18:32:46]    WARN function createStudent -> New student added
+[2023-09-25 18:34:28]    INFO calling function createStudent VALUES(FCGC, Johny, Depp, depp@gmail.com, 2002-11-14, 2019-09-01)
+[2023-09-25 18:34:28]    WARN function createStudent -> New student added
+[2023-09-25 18:34:50]    INFO calling function printAllFaculties
+[2023-09-25 18:36:02]    INFO calling function graduateStudent VALUES(depp@gmail.com)
+[2023-09-25 18:36:02]    WARN function graduateStudent -> Student graduated
+[2023-09-25 18:36:22]    INFO calling function printAllStudentsFacultyByStatus VALUES(FCGC, true)
+[2023-09-25 18:38:02]    INFO calling function createFaculty VALUES(Facultatea Calculatoare, Informatica si Microelectronica,FCGC,SOFTWARE_ENGINEERING)
+[2023-09-25 18:38:02]    WARN function createFaculty -> A coincidence with faculties abbreviation
+[2023-09-25 18:38:50]    INFO calling function createFaculty VALUES(Facultatea Calculatoare, Informatica si Microelectronica,FCIM,SOFTWARE_ENGINEERING)
+[2023-09-25 18:38:50]    INFO function createFaculty -> New faculty added.
+[2023-09-25 18:38:56]    INFO calling function printAllFaculties
+[2023-09-25 18:39:10]    INFO calling function searchStudentFaculty VALUES(rodion@gmail.com)
+[2023-09-25 18:39:10]    INFO calling function searchStudentFaculty -> Student Founded
+[2023-09-25 18:40:02]    INFO calling function changeStudentFirstName VALUES(depp@gmail.com,Johnny)
+[2023-09-25 18:40:02]    INFO function changeStudentFirstName -> Succesfully updated
