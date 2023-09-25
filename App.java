@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class index {
+public class App {
     public static void main(String[] args){
         BankAccount newAccount = new BankAccount("124rafafa3", "ClepaRodion");
         newAccount.printAllData();
