@@ -24,3 +24,4 @@
 [2023-09-25 18:39:10]    INFO calling function searchStudentFaculty -> Student Founded
 [2023-09-25 18:40:02]    INFO calling function changeStudentFirstName VALUES(depp@gmail.com,Johnny)
 [2023-09-25 18:40:02]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-09-26 08:14:28]    INFO calling function printAllFaculties

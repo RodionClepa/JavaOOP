@@ -17,7 +17,7 @@ public class Univer{
         this.faculties = new ArrayList<>();
     }
 
-    private void createFaculty(String nameFac, String abbreviation, String field){
+    public void createFaculty(String nameFac, String abbreviation, String field){
         log("INFO", "calling function createFaculty VALUES("+nameFac+","+abbreviation+","+field+")");
         StudyField studyFields = null;
         boolean foundCoincidence = false;
@@ -26,38 +26,37 @@ public class Univer{
         } catch (IllegalArgumentException e) {
             log("ERROR", "function createFaculty -> Invalid Study Field");
             System.out.println("Invalid Study Field");
+            return;
         }
-        if(studyFields!=null){
-            for(int i=0; i<faculties.size(); i++){
-                if(faculties.get(i).getName().equals(nameFac)){
-                    foundCoincidence=true;
-                    log("WARN", "function createFaculty -> A coincidence with faculties name");
-                    System.out.println("Sorry we found a coincidence with faculties name");
-                    break;
-                }
-                if(faculties.get(i).getAbbreviation().equals(abbreviation)){
-                    foundCoincidence=true;
-                    log("WARN", "function createFaculty -> A coincidence with faculties abbreviation");
-                    System.out.println("Sorry we found a coincidence with faculties abbreviation");
-                    break;
-                }
+        for(int i=0; i<faculties.size(); i++){
+            if(faculties.get(i).getName().equals(nameFac)){
+                foundCoincidence=true;
+                log("WARN", "function createFaculty -> A coincidence with faculties name");
+                System.out.println("Sorry we found a coincidence with faculties name");
+                break;
             }
-            if(foundCoincidence==false) {
-                faculties.add(new Faculty(nameFac,abbreviation, studyFields));
-                System.out.println("New faculty added");
-                log("INFO", "function createFaculty -> New faculty added.");
-                saveDataInFile();
+            if(faculties.get(i).getAbbreviation().equals(abbreviation)){
+                foundCoincidence=true;
+                log("WARN", "function createFaculty -> A coincidence with faculties abbreviation");
+                System.out.println("Sorry we found a coincidence with faculties abbreviation");
+                break;
             }
+        }
+        if(foundCoincidence==false) {
+            faculties.add(new Faculty(nameFac,abbreviation, studyFields));
+            System.out.println("New faculty added");
+            log("INFO", "function createFaculty -> New faculty added.");
+            saveDataInFile();
         }
     }
-    private void printAllFaculties(){
+    public void printAllFaculties(){
         log("INFO", "calling function printAllFaculties");
         for(int i=0; i<faculties.size(); i++){
             faculties.get(i).printFaculty();
             System.out.println("--------------------------------");
         }
     }
-    private void displayFacultiesOfField(String fieldName){
+    public void displayFacultiesOfField(String fieldName){
         log("INFO", "calling function printAllFaculties VALUES("+fieldName+")");
         StudyField studyFields = null;
         try {
@@ -65,18 +64,17 @@ public class Univer{
         } catch (IllegalArgumentException e) {
             log("ERROR", "function createFaculty -> Invalid Study Field");
             System.out.println("Invalid Study Field");
+            return;
         }
-        if(studyFields!=null){
-            for (int i = 0; i < faculties.size(); i++) {
-                if(faculties.get(i).getField()==studyFields){
-                    faculties.get(i).printFaculty();
-                    System.out.println("--------------------------------");
-                }
+        for (int i = 0; i < faculties.size(); i++) {
+            if(faculties.get(i).getField()==studyFields){
+                faculties.get(i).printFaculty();
+                System.out.println("--------------------------------");
             }
         }
         // if(studyFields)
     }
-    private void createStudent(String abbreviation, String firstName, String lastName, String email, String dateBirth, String dateEnroll){
+    public void createStudent(String abbreviation, String firstName, String lastName, String email, String dateBirth, String dateEnroll){
         log("INFO", "calling function createStudent VALUES("+abbreviation+", "+firstName+", "+lastName+", "+email+", "+dateBirth+", "+dateEnroll+")");
         List<Student> students = new ArrayList<>();
         Student student = null;
@@ -147,7 +145,7 @@ public class Univer{
         log("WARN", "function createStudent -> New student added");
         saveDataInFile();
     }
-    private void graduateStudent(String email){
+    public void graduateStudent(String email){
         log("INFO", "calling function graduateStudent VALUES("+email+")");
         List<Student> students = new ArrayList<>();
         boolean studentStatus;
@@ -175,7 +173,7 @@ public class Univer{
         System.out.println("No such email!");
         log("WARN", "function graduateStudent -> No such email");
     }
-    private void printAllStudentsFacultyByStatus(String abbreviation, boolean graduated){
+    public void printAllStudentsFacultyByStatus(String abbreviation, boolean graduated){
         log("INFO", "calling function printAllStudentsFacultyByStatus VALUES("+abbreviation+", "+graduated+")");
         abbreviation = abbreviation.toUpperCase();
         for(int i=0; i<faculties.size(); i++){
@@ -187,7 +185,7 @@ public class Univer{
         System.out.println("Invalid abbreviation name");
         log("WARN", "function printAllStudentsFacultyByStatus -> Invalid abbreviation");
     }
-    private void searchStudentFaculty(String email){
+    public void searchStudentFaculty(String email){
         List<Student> students = new ArrayList<>();
         Student student = null;
         log("INFO", "calling function searchStudentFaculty VALUES("+email+")");
@@ -210,7 +208,7 @@ public class Univer{
         System.out.println("No such student or abbreviation");
         log("WARN", "function searchStudentFaculty -> No such student or abbreviation");
     }
-    private void checkStudentBelongs(String abbreviation, String email){
+    public void checkStudentBelongs(String abbreviation, String email){
         log("INFO", "calling function checkStudentBelongs VALUES("+abbreviation+","+email+")");
         List<Student> students = new ArrayList<>();
         Student student = null;
@@ -235,7 +233,7 @@ public class Univer{
         log("WARN", "function checkStudentBelongs -> Faculty doesn't exists");
     }
 
-    private void changeStudentFirstName(String email, String firstName){
+    public void changeStudentFirstName(String email, String firstName){
         log("INFO", "calling function changeStudentFirstName VALUES("+email+","+firstName+")");
         List<Student> students = new ArrayList<>();
         Student student = null;
@@ -256,7 +254,7 @@ public class Univer{
         System.out.println("No such email!");
     }
 
-    private void changeStudentLastName(String email, String lastName){
+    public void changeStudentLastName(String email, String lastName){
         log("INFO", "calling function changeStudentLastName VALUES("+email+","+lastName+")");
         List<Student> students = new ArrayList<>();
         Student student = null;
@@ -276,7 +274,7 @@ public class Univer{
         log("WARN", "function changeStudentLastName -> No such email");
         System.out.println("No such email!");
     }
-    private void saveDataInFile(){
+    public void saveDataInFile(){
         Faculty faculty = null;
         List<Student> students = new ArrayList<>();
         Student student = null;
@@ -304,16 +302,15 @@ public class Univer{
                     }
                     myWriter.write("]\n");
                 }
-                //Save students
             }
-            // myWriter.write("Files in Java might be tricky, but it is fun enough!");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
-    private void readDataFromFile(){
+    public void readDataFromFile(){
+        log("INFO", "function readDataFromFile -> Proccessing...");
         try {
             File myFile = new File("Data.txt");
             if(myFile.exists() && myFile.length()==0){
@@ -351,169 +348,24 @@ public class Univer{
                 index+=1;
             }
             myReader.close();
+            log("INFO", "function readDataFromFile -> Successfully Read Data");
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
-    private void log(String type, String message){
+    public void log(String type, String message){
         try {
             FileWriter logWriter = new FileWriter("logs.txt", true);
             LocalDateTime timeNow = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDateTime = timeNow.format(formatter);
             String logFormat = "[%s] %7s %s%n";
-
             logWriter.write(String.format(logFormat, formattedDateTime, type, message));
             logWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-    }
-    public static void main(String[] args) {
-        Univer uni = new Univer();
-        uni.readDataFromFile();
-        String cmd = "";
-        String[] operation;
-        Scanner scanner = new Scanner(System.in);
-        while(!cmd.equals("q")){
-            System.out.println("f - Faculty operations\ng - General operations\ns - Student Operations\nq - Quit Program\n");
-            System.out.print("->");
-            cmd = scanner.nextLine();
-            if(cmd.equals("f")){
-                do {
-
-                    System.out.println("Faculty Operations");
-                    System.out.println("ns/<faculty abbreviation>/<first name>/<last name>/<email>/<year_month_day_birth>/<year_month_day_enrollment> - create student\ngs/<email> - graduate student\nds/<faculty abreviation> - display enrolled student\ndg/<faculty> - display graduated students\nbf/<faculty abbreviation>/<email> - check if student belongs to faculty\nb - go back\nq - Quit Program\n");
-                    System.out.print("->");
-                    cmd = scanner.nextLine();
-                    operation = cmd.split("/");
-
-                    if(operation[0].equals("ns")){
-                        if(operation.length==7){
-                            uni.createStudent(operation[1],operation[2], operation[3], operation[4], operation[5], operation[6]);
-                        }
-                        else{
-                            System.out.println("Invalid number of attributes");
-                        }
-                    }
-                    else if(operation[0].equals("gs")){
-                        if(operation.length == 2){
-                            uni.graduateStudent(operation[1]);
-                        }
-                        else{
-                            System.out.println("Invalid number of attributes");
-                        }
-                    }
-                    else if(operation[0].equals("ds")){
-                        if(operation.length == 2){
-                            uni.printAllStudentsFacultyByStatus(operation[1], false);
-                        }
-                        else{
-                            System.out.println("Invalid number of attributes");
-                        }
-                    }
-                    else if(operation[0].equals("dg")){
-                        if(operation.length == 2){
-                            uni.printAllStudentsFacultyByStatus(operation[1], true);
-                        }
-                        else{
-                            System.out.println("Invalid number of attributes");
-                        }
-                    }
-                    else if(operation[0].equals("bf")){
-                        if(operation.length == 3){
-                            uni.checkStudentBelongs(operation[1], operation[2]);
-                        }
-                        else{
-                            System.out.println("Invalid number of attributes");
-                        }
-                    }
-                } while(!operation[0].equals("b") && !operation[0].equals("q"));
-            }
-            // nf/Facultatea Calculatoare, Informatica si Microelectronica/FCIM/SOFTWARE_ENGINEERING
-            // ns/FCGC/Rodion/Clepa/rodion@gmail.com/2002-05-24/2022-09-01
-            else if(cmd.equals("g")){
-                do{
-                
-                System.out.println("General Operations");
-                System.out.println("nf/<faculty name>/<faculty abbreviation>/<field> - create faculty\nss/<student email> - search student and show faculty\ndf - display all falcuties\ndf/<field> - display all faculties of a field\nb - go back\nq - Quit Program\n");
-                System.out.print("->");
-                cmd = scanner.nextLine();
-                operation = cmd.split("/");
-
-                if(operation[0].equals("df")){
-                    if(operation.length==1){
-                        uni.printAllFaculties();
-                    }
-                    else if(operation.length==2){
-                        uni.displayFacultiesOfField(operation[1]);
-                    }
-                    else{
-                        System.out.println("Invalid number of attributes");
-                    }
-                }
-                else if(operation[0].equals("ss")){
-                    if(operation.length==2){
-                        uni.searchStudentFaculty(operation[1]);
-                    }
-                    else{
-                        System.out.println("Not enough attributes!");
-                    }
-                }
-                else if(operation[0].equals("nf")){
-                    if(operation.length==4){
-                        uni.createFaculty(operation[1], operation[2], operation[3]);
-                    }
-                    else{
-                        System.out.println("Not enough attributes!");
-                    }
-                }
-                else if(operation[0].equals("s")){
-                    uni.readDataFromFile();
-                }
-            }while(!operation[0].equals("b") && !operation[0].equals("q"));
-            }
-            else if(cmd.equals("s")){
-                do {
-
-                    System.out.println("Student Operations");
-                    System.out.println("cf/<email>/<first name> - change first name\ncl/<email>/<last name>\nb - go back\nq - Quit Program\n");
-                    System.out.print("->");
-                    cmd = scanner.nextLine();
-                    operation = cmd.split("/");
-
-                    if(operation[0].equals("cf")){
-                        if(operation.length==3){
-                            if(operation[2].isEmpty()){
-                                System.out.println("First Name is Empty");
-                            }
-                            else{
-                                uni.changeStudentFirstName(operation[1], operation[2]);
-                            }
-                        }
-                        else{
-                            System.out.println("Not enough attributes!");
-                        }
-                    }
-                    if(operation[0].equals("cl")){
-                        if(operation.length==3){
-                            if(operation[2].isEmpty()){
-                                System.out.println("Last Name is Empty");
-                            }
-                            else{
-                                uni.changeStudentLastName(operation[1], operation[2]);
-                            }
-                        }
-                        else{
-                            System.out.println("Not enough attributes!");
-                        }
-                    }
-                } while(!operation[0].equals("b") && !operation[0].equals("q"));
-            }
-        }
-        System.out.println();
-        scanner.close();
     }
 }
