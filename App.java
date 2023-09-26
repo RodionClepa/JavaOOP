@@ -2,13 +2,12 @@ import java.util.Scanner;
 
 public class App {
     private String[] operation;
-    private String cmd = "";
 
-    private void generalOperations(Univer uni){
-        Scanner scanner = new Scanner(System.in);
+    private void generalOperations(Univer uni, Scanner scanner){
+        String cmd = "";
         do{
             System.out.println("General Operations");
-            System.out.println("nf/<faculty name>/<faculty abbreviation>/<field> - create faculty\nss/<student email> - search student and show faculty\ndf - display all falcuties\ndf/<field> - display all faculties of a field\nb - go back\nq - Quit Program\n");
+            System.out.println("nf/<faculty name>/<faculty abbreviation>/<field> - create faculty\nss/<student email> - search student and show faculty\ndf - display all falcuties\ndf/<field> - display all faculties of a field\nb - go back\n");
             System.out.print("->");
             cmd = scanner.nextLine();
             operation = cmd.split("/");
@@ -52,13 +51,12 @@ public class App {
                 uni.readDataFromFile();
             }
         }while(!operation[0].equals("b") && !operation[0].equals("q"));
-        scanner.close();
     }
-    private void facultyOperations(Univer uni){
-        Scanner scanner = new Scanner(System.in);
+    private void facultyOperations(Univer uni, Scanner scanner){
+        String cmd = "";
         do {
             System.out.println("Faculty Operations");
-            System.out.println("ns/<faculty abbreviation>/<first name>/<last name>/<email>/<year_month_day_birth>/<year_month_day_enrollment> - create student\ngs/<email> - graduate student\nds/<faculty abreviation> - display enrolled student\ndg/<faculty> - display graduated students\nbf/<faculty abbreviation>/<email> - check if student belongs to faculty\nb - go back\nq - Quit Program\n");
+            System.out.println("ns/<faculty abbreviation>/<first name>/<last name>/<email>/<year-month-day birth>/<year-month-day enrollment> - create student\ngs/<email> - graduate student\nds/<faculty abreviation> - display enrolled student\ndg/<faculty> - display graduated students\nbf/<faculty abbreviation>/<email> - check if student belongs to faculty\nb - go back\n");
             System.out.print("->");
             cmd = scanner.nextLine();
             operation = cmd.split("/");
@@ -113,14 +111,14 @@ public class App {
                 }
             }
         } while(!operation[0].equals("b") && !operation[0].equals("q"));
-        scanner.close();
     }
 
-    private void studentOperations(Univer uni){
-        Scanner scanner = new Scanner(System.in);
+    private void studentOperations(Univer uni, Scanner scanner){
+        String cmd = "";
         do {
+            System.out.println(cmd);
             System.out.println("Student Operations");
-            System.out.println("cf/<email>/<first name> - change first name\ncl/<email>/<last name>\nb - go back\nq - Quit Program\n");
+            System.out.println("cf/<email>/<first name> - change first name\ncl/<email>/<last name>\nb - go back\n");
             System.out.print("->");
             cmd = scanner.nextLine();
             operation = cmd.split("/");
@@ -146,7 +144,6 @@ public class App {
                 }
             }
         } while(!operation[0].equals("b") && !operation[0].equals("q"));
-        scanner.close();
     }
 
     public static void main(String[] args) {
@@ -157,6 +154,7 @@ public class App {
         String cmd = "";
         Scanner scanner = new Scanner(System.in);
         while(!cmd.equals("q")){
+            System.out.println("--------------------");
             uni.log("INFO", "function readDataFromFile -> Proccessing...");
             System.out.println("f - Faculty operations\ng - General operations\ns - Student Operations\nq - Quit Program\n");
             System.out.print("->");
@@ -164,19 +162,19 @@ public class App {
             uni.log("INFO", "Reading command VALUE("+cmd+")");
             if(cmd.equals("f")){
                 uni.log("INFO", "Calling facultyOperations");
-                app.facultyOperations(uni);
+                app.facultyOperations(uni, scanner);
             }
             else if(cmd.equals("g")){
                 uni.log("INFO", "Calling generalOperation");
-                app.generalOperations(uni);
+                app.generalOperations(uni, scanner);
             }
             else if(cmd.equals("s")){
                 uni.log("INFO", "Calling studentOperations");
-                app.studentOperations(uni);
+                app.studentOperations(uni, scanner);
             }
         }
-        scanner.close();
         uni.log("INFO", "Closing programm");
+        scanner.close();
     }
 }
 

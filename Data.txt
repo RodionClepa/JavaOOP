@@ -60,7 +60,7 @@ kent@gmail.com
 2019-06-05
 2001-12-12
 false
-Johnny
+John
 Depp
 depp@gmail.com
 2019-09-01
@@ -70,4 +70,8 @@ true
 Facultatea Calculatoare, Informatica si Microelectronica
 FCIM
 SOFTWARE_ENGINEERING
+[]
+Facultatea Agrara
+FA
+URBANISM_ARCHITECTURE
 []
