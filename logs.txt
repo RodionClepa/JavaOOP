@@ -349,3 +349,51 @@
 [2023-10-02 13:56:52]    INFO function readDataFromFile -> Proccessing...
 [2023-10-02 13:56:54]    INFO Reading command VALUE(q)
 [2023-10-02 13:56:54]    INFO Closing programm
+[2023-10-02 14:09:09]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:09:09]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:09:09]    INFO function readDataFromFile -> Successfully Read Data
+[2023-10-02 14:09:09]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:09:12]    INFO Reading command VALUE(g)
+[2023-10-02 14:09:12]    INFO Calling generalOperation
+[2023-10-02 14:09:12]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:09:13]    INFO Reading command VALUE(g)
+[2023-10-02 14:09:13]    INFO Calling generalOperation
+[2023-10-02 14:09:15]    INFO generalOperations -> operation<df>
+[2023-10-02 14:09:15]    INFO calling function printAllFaculties
+[2023-10-02 14:09:17]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:09:19]    INFO Reading command VALUE(q)
+[2023-10-02 14:09:19]    INFO Closing programm
+[2023-10-02 14:15:02]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:15:02]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:15:02]    INFO function readDataFromFile -> Successfully Read Data
+[2023-10-02 14:15:02]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:15:03]    INFO Reading command VALUE(s)
+[2023-10-02 14:15:03]    INFO Calling studentOperations
+[2023-10-02 14:15:23]    INFO studentOperations -> operation<cf>
+[2023-10-02 14:15:23]    INFO calling function changeStudentFirstName VALUES(rodion@gmail.com,Radion)
+[2023-10-02 14:15:23]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:15:40]    INFO studentOperations -> operation<cf>
+[2023-10-02 14:15:40]    INFO calling function changeStudentFirstName VALUES(rodion@gmail.com,Rodion)
+[2023-10-02 14:15:40]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:17:07]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:17:07]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:17:07]    INFO function readDataFromFile -> Successfully Read Data
+[2023-10-02 14:17:07]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:17:12]    INFO Reading command VALUE(f)
+[2023-10-02 14:17:12]    INFO Calling facultyOperations
+[2023-10-02 14:17:18]    INFO facultyOperations -> operation<ns>
+[2023-10-02 14:17:18]    INFO calling function printAllStudentsFacultyByStatus VALUES(FCIM, false)
+[2023-10-02 14:17:24]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:17:24]    INFO Reading command VALUE(q)
+[2023-10-02 14:17:24]    INFO Closing programm
+[2023-10-02 14:20:42]    INFO function changeStudentFirstName -> Succesfully updated
+[2023-10-02 14:20:42]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:20:42]    INFO function readDataFromFile -> Successfully Read Data
+[2023-10-02 14:20:42]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:20:44]    INFO Reading command VALUE(g)
+[2023-10-02 14:20:44]    INFO Calling generalOperation
+[2023-10-02 14:20:46]    INFO generalOperations -> operation<df>
+[2023-10-02 14:20:46]    INFO calling function printAllFaculties
+[2023-10-02 14:20:48]    INFO function readDataFromFile -> Proccessing...
+[2023-10-02 14:20:49]    INFO Reading command VALUE(q)
+[2023-10-02 14:20:49]    INFO Closing programm
