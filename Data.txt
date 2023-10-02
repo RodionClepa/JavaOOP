@@ -36,7 +36,7 @@ Wayne
 bwayne3@gmail.com
 2023-08-11
 2004-11-11
-false
+true
 ]
 Facultatea Tehnologia Alimentelor
 FTA
@@ -59,7 +59,7 @@ Kent
 kent@gmail.com
 2019-06-05
 2001-12-12
-false
+true
 John
 Depp
 depp@gmail.com
@@ -76,7 +76,7 @@ Malvin
 mol@gmail.com
 2019-08-01
 2002-12-12
-false
+true
 ]
 Facultatea Agrara
 FA
@@ -92,4 +92,34 @@ lupan@gmail.com
 2022-12-12
 2002-12-12
 true
+Alice
+Johnson
+alice.johnson@email.com
+2023-09-20
+1998-04-15
+false
+Bob
+Smith
+bob.smith123@gmail.com
+2023-09-18
+2000-12-02
+false
+Eva
+Martinez
+eva.martinez@emailprovider.com
+2023-09-19
+1997-08-10
+false
+Michael
+Brown
+michael.brown@email.com
+2023-09-21
+1995-03-30
+false
+Sophia
+Lee
+sophia.lee123@emailprovider.net
+2023-09-22
+2003-11-05
+false
 ]

@@ -56,8 +56,8 @@ public class Student {
         return this.enrollmentDate;
     }
 
-    public void gradute(){
-        graduated=true;
+    public void graduate(){
+        this.graduated=true;
     }
     public void changeFirstName(String firstName){
         this.firstName = firstName;

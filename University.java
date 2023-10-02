@@ -100,19 +100,19 @@ public class University{
         students = faculties.get(positionOfFaculty).getStudentListFaculty();
         for (int i = 0; i < students.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 foundCoincidence = true;
                 break;
             }
         }
         if(foundCoincidence){
             System.out.println("Email was already taken or Student is already enrolled");
-            LoggingSystem.log("WARN", "function createStudent -> Email was already taken or Student is already enrolled");
+            LoggingSystem.log("WARN", "function createStudent -> Email was already taken or Student is already enrolled - "+ email);
             return;
         }
         for (int i = 0; i < faculties.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 foundCoincidence = true;
                 if(i == positionOfFaculty){
                     System.out.println("Email was already taken or Student is already enrolled");
@@ -141,14 +141,14 @@ public class University{
         Student student = null;
         for (int i = 0; i < faculties.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 studentStatus = student.getGraduated();
                 if(studentStatus){
-                    System.out.println("Student already graduated");
+                    System.out.println("Student already graduated - " + email);
                     LoggingSystem.log("WARN", "function graduateStudent -> Student already graduated");
                 }
                 else{
-                    student.gradute();
+                    student.graduate();
                     System.out.println("Student graduated");
                     LoggingSystem.log("WARN", "function graduateStudent -> Student graduated");
                     FileManager.saveDataInFile(faculties);
@@ -176,7 +176,7 @@ public class University{
         LoggingSystem.log("INFO", "calling function searchStudentFaculty VALUES("+email+")");
         for (int i = 0; i < faculties.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 student.studentInfo();
                 System.out.println("Abbreviation: "+faculties.get(i).getAbbreviation());
                 LoggingSystem.log("INFO", "calling function searchStudentFaculty -> Student Founded");
@@ -193,7 +193,7 @@ public class University{
         for (int i = 0; i < faculties.size(); i++) {
             if(faculties.get(i).getAbbreviation().equals(abbreviation)){
                 student = faculties.get(i).findStudentInFacultyByEmail(email);
-                if(!student.equals(null)) {
+                if(student != null) {
                     System.out.println("\n!!!Student belongs to this faculty!!!\n");
                     LoggingSystem.log("INFO", "function checkStudentBelongs -> Student belongs");
                     return;
@@ -212,7 +212,7 @@ public class University{
         Student student = null;
         for (int i = 0; i < faculties.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 student.changeFirstName(firstName);
                 System.out.println("Successfully changed First name");
                 LoggingSystem.log("INFO", "function changeStudentFirstName -> Succesfully updated");
@@ -229,7 +229,7 @@ public class University{
         Student student = null;
         for (int i = 0; i < faculties.size(); i++) {
             student = faculties.get(i).findStudentInFacultyByEmail(email);
-            if(!student.equals(null)) {
+            if(student != null) {
                 student.changeLastName(lastName);
                 System.out.println("Successfully changed Last name");
                 LoggingSystem.log("INFO", "function changeStudentLastName -> Succesfully updated");
@@ -243,6 +243,18 @@ public class University{
 
     public void addListOfFaculties(List<Faculty> faculties){
         this.faculties = faculties;
+    }
+
+    public int getFacultyIndex(String abbreviation){
+        for (int i = 0; i < faculties.size(); i++) {
+            if(faculties.get(i).getAbbreviation().equals(abbreviation)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public List<Faculty> getFacultiesList(){
+        return this.faculties;
     }
 
 }
