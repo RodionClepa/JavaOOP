@@ -7,7 +7,7 @@ Clepa
 rodion@gmail.com
 2022-09-01
 2002-05-24
-false
+true
 Ion
 Popescu
 popescu@gmail.com
@@ -70,8 +70,26 @@ true
 Facultatea Calculatoare, Informatica si Microelectronica
 FCIM
 SOFTWARE_ENGINEERING
-[]
+[
+Moli
+Malvin
+mol@gmail.com
+2019-08-01
+2002-12-12
+false
+]
 Facultatea Agrara
 FA
 URBANISM_ARCHITECTURE
 []
+Facultatea Test
+FT
+FOOD_TECHNOLOGY
+[
+Lupan
+Lup
+lupan@gmail.com
+2022-12-12
+2002-12-12
+true
+]

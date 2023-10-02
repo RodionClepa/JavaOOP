@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Faculty {
     private String name;
     private String abbreviation;
@@ -20,13 +21,13 @@ public class Faculty {
     }
 
     public String getName(){
-        return name;
+        return this.name;
     }
     public String getAbbreviation(){
-        return abbreviation;
+        return this.abbreviation;
     }
     public StudyField getField(){
-        return studyField;
+        return this.studyField;
     }
     public void addStudent(Student newStudent){
         students.add(newStudent);
@@ -43,5 +44,16 @@ public class Faculty {
                 System.out.println("-------------------------------------");
             }
         }
+    }
+
+    public Student findStudentInFacultyByEmail(String email){
+        Student student = null;
+        for (int j = 0; j < students.size(); j++) {
+            student = students.get(j);
+            if(student.getEmail().equals(email)){
+                return student;
+            }
+        }
+        return null;
     }
 }

@@ -35,25 +35,25 @@ public class Student {
     }
 
     public String getFirstName(){
-        return firstName;
+        return this.firstName;
     }
     public String getLastName(){
-        return lastName;
+        return this.lastName;
     }
 
     public String getEmail(){
-        return email;
+        return this.email;
     }
     public boolean getGraduated(){
-        return graduated;
+        return this.graduated;
     }
 
     public LocalDate getDateOfBirth(){
-        return dateOfBirth;
+        return this.dateOfBirth;
     }
 
     public LocalDate getEnrollmentDate(){
-        return enrollmentDate;
+        return this.enrollmentDate;
     }
 
     public void gradute(){
