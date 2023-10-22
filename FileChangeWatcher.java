@@ -8,31 +8,23 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.io.File;
 
-public class Watcher {
+public class FileChangeWatcher {
     Path directoryToWatch;
-    File directoryPath;
     WatchKey key;
     WatchService watcher;
-    String contentOnRun[];
 
-    public Watcher(String directoryToWatch){
+    public FileChangeWatcher(String directoryToWatch){
         try {
             this.watcher = FileSystems.getDefault().newWatchService();
             this.directoryToWatch = Paths.get(directoryToWatch);
             this.key = this.directoryToWatch.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-            this.directoryPath = new File(directoryToWatch);
-            this.contentOnRun = directoryPath.list();
         } catch (IOException e) {
             System.err.println(e);
         }
     }
 
     public void proccessEvents(){
-        for(int i=0; i<contentOnRun.length; i++) {
-            System.out.println(contentOnRun[i]);
-         }
         while(true){
             try {
                 key = watcher.take();
@@ -66,12 +58,9 @@ public class Watcher {
         }
     }
 
-    public static void main(String[] args) {
-        String directoryPath = "C:\\1univer\\Java\\Lab2";
-        Watcher k = new Watcher(directoryPath);
-        k.proccessEvents();
+    public String getDirectoryToWatchString(){
+        return directoryToWatch.toString();
     }
-
 }
 
 // https://docs.oracle.com/javase/tutorial/essential/io/notification.html
