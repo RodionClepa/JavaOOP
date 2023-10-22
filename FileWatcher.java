@@ -9,12 +9,12 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
-public class FileChangeWatcher {
+public class FileWatcher {
     Path directoryToWatch;
     WatchKey key;
     WatchService watcher;
 
-    public FileChangeWatcher(String directoryToWatch){
+    public FileWatcher(String directoryToWatch){
         try {
             this.watcher = FileSystems.getDefault().newWatchService();
             this.directoryToWatch = Paths.get(directoryToWatch);
@@ -24,7 +24,7 @@ public class FileChangeWatcher {
         }
     }
 
-    public void proccessEvents(){
+    public void proccessEvents(Snapshot prevSnapshot, Snapshot latestSnapshot){
         while(true){
             try {
                 key = watcher.take();
@@ -39,14 +39,11 @@ public class FileChangeWatcher {
 
                 // Handle different event types
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-                    System.out.println("File created: " + context);
-                    // Add your logic to handle file creation here
+                    latestSnapshot.addNewEntry("Created", context);
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-                    System.out.println("File deleted: " + context);
-                    // Add your logic to handle file deletion here
+                    latestSnapshot.changeEntryStatus("Deleted", context.toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    System.out.println("File modified: " + context);
-                    // Add your logic to handle file modification here
+                    latestSnapshot.changeEntryStatus("Changed", context.toString());
                 }
             }
 
