@@ -8,6 +8,7 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.List;
 
 public class FileWatcher {
     Path directoryToWatch;
@@ -24,28 +25,47 @@ public class FileWatcher {
         }
     }
 
-    public void proccessEvents(Snapshot prevSnapshot, Snapshot latestSnapshot){
+    public void proccessEvents(List<Snapshot> snapshots){
+        Snapshot latestSnapshot;
+        Snapshot prevSnapshot;
         while(true){
+            prevSnapshot = snapshots.get(snapshots.size() - 2);
+            latestSnapshot = snapshots.get(snapshots.size()-1);
             try {
                 key = watcher.take();
             } catch (InterruptedException e) {
                 System.err.println(e);
                 return;
             }
+            List<WatchEvent<?>> events = key.pollEvents();
+            for (int i = 0; i < events.size()-1; i++) {
+                String context = events.get(i).context().toString();
+                String nextContext = events.get(i+1).context().toString();
+                System.out.println(context+" "+nextContext);
+                if(context.equals(nextContext)){
+                    events.remove(i+1);
+                    i--;
+                }
+            }
 
-            for (WatchEvent<?> event : key.pollEvents()) {
+            for (WatchEvent<?> event : events) {
                 WatchEvent.Kind<?> kind = event.kind();
                 Path context = (Path) event.context();
 
                 // Handle different event types
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-                    latestSnapshot.addNewEntry("Created", context);
+                    System.out.println("created");
+                    latestSnapshot.addNewEntry("Created", context.toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
                     latestSnapshot.changeEntryStatus("Deleted", context.toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    latestSnapshot.changeEntryStatus("Changed", context.toString());
+                    if(prevSnapshot.checkIfFileIsInSnapshot(context.toString())){
+                        System.out.println("changed");
+                        latestSnapshot.changeEntryStatus("Changed", context.toString());
+                    }
                 }
             }
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
             // reset the key is neccesary if you want to keep track on other changes
             boolean valid = key.reset();

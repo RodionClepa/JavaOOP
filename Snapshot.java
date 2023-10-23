@@ -1,4 +1,3 @@
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,7 @@ public class Snapshot {
     private LocalDateTime createdTimestamp;
 
     public Snapshot(Snapshot latestSnapshot){
-        this.fileStatusEntries = latestSnapshot.fileStatusEntries;
+        this.fileStatusEntries = new ArrayList<>(latestSnapshot.fileStatusEntries);
         this.createdTimestamp = null;
         setAllFileInPrevSnapshot();
     }
@@ -25,18 +24,18 @@ public class Snapshot {
 
     public void printAllFileStatusEntry(){
         String logFormat = "%-20s - %-25s %s%n";
-        System.out.println("Created Snapshot at: " + createdTimestamp);
         FileStatusEntry file;
         System.out.println("---------------------------------------------------------------");
+        System.out.println("Created Snapshot at: " + createdTimestamp);
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             file = fileStatusEntries.get(i);
-            System.out.print(String.format(logFormat, file.getFilename(), file.getStatus(), file.getOnDateTimeString()));
+            System.out.print(String.format(logFormat, file.getFilename(), file.getStatus(), file.getUpdatedTimeString()));
         }
         System.out.println("---------------------------------------------------------------");
     }
 
-    public void addNewEntry(String status, Path context){
-        fileStatusEntries.add(new FileStatusEntry(context.toString(), status));
+    public void addNewEntry(String status, String context){
+        fileStatusEntries.add(new FileStatusEntry(context, status));
     }
 
     public void changeEntryStatus(String status, String filename){
@@ -45,6 +44,7 @@ public class Snapshot {
             if(fileEntry.getFilename().equals(filename)){
                 if(status.equals("Deleted") && !fileEntry.getIsInPreviousSnapshot()){
                     fileStatusEntries.remove(i);
+                    System.out.println("Worked delete");
                 }
                 else{
                     fileEntry.changeStatus(status);
@@ -54,9 +54,39 @@ public class Snapshot {
         }
     }
 
+    public void changeAllEntryStatus(){
+        for (int i = 0; i < fileStatusEntries.size(); i++) {
+            fileStatusEntries.get(i).changeStatus("No Change");
+        }
+    }
+
     private void setAllFileInPrevSnapshot(){
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             fileStatusEntries.get(i).changeIsInPreviousSnapshot();
+        }
+    }
+
+
+    public void addTimestamp(){
+        this.createdTimestamp = LocalDateTime.now();
+    }
+
+    public boolean checkIfFileIsInSnapshot(String filename){
+        String tempFileName;
+        for (int i = 0; i < fileStatusEntries.size(); i++) {
+            tempFileName = fileStatusEntries.get(i).getFilename();
+            if(tempFileName.equals(filename)){
+                System.out.println("Coindence: "+ tempFileName+" "+filename);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void eraseStatusDeleted(){
+        for (int i = 0; i < fileStatusEntries.size(); i++) {
+            if(fileStatusEntries.get(i).getStatus().equals("Deleted")){
+                fileStatusEntries.remove(i);
+            }
         }
     }
 }

@@ -3,20 +3,21 @@ import java.time.LocalDateTime;
 public class FileStatusEntry {
     private String filename;
     private String status;
-    private LocalDateTime onDateTime;
+    private LocalDateTime updatedTime;
     private boolean isInPreviousSnapshot;
 
     public FileStatusEntry(String filename, String status){
         this.filename = filename;
         this.status = status;
-        this.onDateTime = LocalDateTime.now();
+        this.updatedTime = LocalDateTime.now();
         this.isInPreviousSnapshot = false;
+
     }
 
-    public FileStatusEntry(String filename, String status, LocalDateTime onDateTime){
+    public FileStatusEntry(String filename, String status, LocalDateTime updatedTime){
         this.filename = filename;
         this.status = status;
-        this.onDateTime = onDateTime;
+        this.updatedTime = updatedTime;
         this.isInPreviousSnapshot = false;
     }
     public String getFilename(){
@@ -25,8 +26,8 @@ public class FileStatusEntry {
     public String getStatus(){
         return this.status;
     }
-    public String getOnDateTimeString(){
-        return this.onDateTime.toString();
+    public String getUpdatedTimeString(){
+        return this.updatedTime.toString();
     }
 
     public boolean getIsInPreviousSnapshot(){
@@ -44,6 +45,6 @@ public class FileStatusEntry {
 
     @Override
     public String toString(){
-        return filename+" "+status+" "+onDateTime.toString();
+        return filename+" "+status+" "+updatedTime.toString();
     }
 }

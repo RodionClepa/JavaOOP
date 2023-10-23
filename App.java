@@ -14,23 +14,45 @@ public class App{
         String directoryPath = "C:\\1univer\\Java\\Lab2\\folder";
         FileWatcher watcher = new FileWatcher(directoryPath);
         List<Snapshot> snapshots = new ArrayList<>();
-        String contentOnRun[] = FileManager.getFolderContent(watcher.getDirectoryToWatchString());
-        
-        snapshots.add(new Snapshot(contentOnRun));
-        Snapshot latestSnapshot = snapshots.get(snapshots.size()-1);
-        snapshots.add(new Snapshot(latestSnapshot));
+        // Snapshot latestSnapshot = new Snapshot(snapshots.get(snapshots.size()-1));
+        // snapshots.add(new Snapshot(latestSnapshot));
         for (int i = 0; i < snapshots.size(); i++) {
             snapshots.get(i).printAllFileStatusEntry();
         }
+        // snapshots.get(snapshots.size()-2).eraseStatusDeleted();
+        // snapshots.get(snapshots.size()-2).changeAllEntryStatus();
+        // Create and start the thread for event processing
+        String contentOnRun[] = FileManager.getFolderContent(watcher.getDirectoryToWatchString());
+        snapshots.add(new Snapshot(contentOnRun));
+        snapshots.add(new Snapshot(snapshots.get(snapshots.size()-1)));
+
         Thread userInputThread = new Thread(() -> {
             String userInput = "";
             while (true) {
                 userInput = takeUserInput();
                 // Process user input here
                 if(userInput.equals("commit")){
-                    
+                    snapshots.get(snapshots.size()-1).addTimestamp();
+                    snapshots.get(snapshots.size()-1).printAllFileStatusEntry();
+                    snapshots.get(snapshots.size()-1).eraseStatusDeleted();
+                    snapshots.get(snapshots.size()-1).changeAllEntryStatus();
+                    snapshots.get(snapshots.size()-2).eraseStatusDeleted();
+                    snapshots.get(snapshots.size()-2).changeAllEntryStatus();
+
+                    snapshots.add(new Snapshot(snapshots.get(snapshots.size()-1)));
+                    // eventProcessingThread.start();
                 }
-                if(userInput.equals("info")){
+                if(userInput.startsWith("info")){
+                    String filename = "";
+                    int startIndex = userInput.indexOf("<");
+                    if(startIndex==-1){
+                        System.out.println("Invalid format - correct format info <filename>");
+                        continue;
+                    }
+                    for (int i = startIndex+1; i < userInput.indexOf(">"); i++) {
+                        filename += userInput.charAt(i);
+                    }
+                    FileInfo.printFileInfo(filename, watcher.getDirectoryToWatchString());
                     
                 }
                 else if (userInput.equals("exit")) {
@@ -40,9 +62,8 @@ public class App{
         });
         userInputThread.start();
 
-        // Create and start the thread for event processing
         Thread eventProcessingThread = new Thread(() -> {
-            watcher.proccessEvents(latestSnapshot, snapshots.get(snapshots.size() - 1));
+            watcher.proccessEvents(snapshots);
         });
         eventProcessingThread.start();
 
