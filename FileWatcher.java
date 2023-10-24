@@ -2,12 +2,18 @@ import static java.nio.file.StandardWatchEventKinds.*;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class FileWatcher {
@@ -29,24 +35,18 @@ public class FileWatcher {
         Snapshot latestSnapshot;
         Snapshot prevSnapshot;
         while(true){
+            // It is neccesary for keep eye track on changes like commit and to get 2 last 
             prevSnapshot = snapshots.get(snapshots.size() - 2);
             latestSnapshot = snapshots.get(snapshots.size()-1);
+            
             try {
                 key = watcher.take();
             } catch (InterruptedException e) {
                 System.err.println(e);
                 return;
             }
+
             List<WatchEvent<?>> events = key.pollEvents();
-            for (int i = 0; i < events.size()-1; i++) {
-                String context = events.get(i).context().toString();
-                String nextContext = events.get(i+1).context().toString();
-                System.out.println(context+" "+nextContext);
-                if(context.equals(nextContext)){
-                    events.remove(i+1);
-                    i--;
-                }
-            }
 
             for (WatchEvent<?> event : events) {
                 WatchEvent.Kind<?> kind = event.kind();
@@ -54,18 +54,25 @@ public class FileWatcher {
 
                 // Handle different event types
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-                    System.out.println("created");
                     latestSnapshot.addNewEntry("Created", context.toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
                     latestSnapshot.changeEntryStatus("Deleted", context.toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    if(prevSnapshot.checkIfFileIsInSnapshot(context.toString())){
-                        System.out.println("changed");
-                        latestSnapshot.changeEntryStatus("Changed", context.toString());
+                    try {
+                        Path path = Paths.get(directoryToWatch + "/" + context);
+                        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+                        FileTime creationTime = attributes.creationTime();
+                        ZoneId zoneId = ZoneId.systemDefault();
+                        ZoneOffset currentZoneOffset = zoneId.getRules().getOffset(Instant.now());
+                        FileTime prevSnapshotCreatedTime = FileTime.from(prevSnapshot.getCreatedTimestamp().toInstant(currentZoneOffset));
+                        if (creationTime.compareTo(prevSnapshotCreatedTime) < 0 && prevSnapshot.checkIfFileIsInSnapshot(context.toString())) {
+                            latestSnapshot.changeEntryStatus("Changed", context.toString());
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error: problem with reading file");
                     }
                 }
             }
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
             // reset the key is neccesary if you want to keep track on other changes
             boolean valid = key.reset();

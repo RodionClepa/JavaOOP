@@ -14,14 +14,9 @@ public class App{
         String directoryPath = "C:\\1univer\\Java\\Lab2\\folder";
         FileWatcher watcher = new FileWatcher(directoryPath);
         List<Snapshot> snapshots = new ArrayList<>();
-        // Snapshot latestSnapshot = new Snapshot(snapshots.get(snapshots.size()-1));
-        // snapshots.add(new Snapshot(latestSnapshot));
         for (int i = 0; i < snapshots.size(); i++) {
             snapshots.get(i).printAllFileStatusEntry();
         }
-        // snapshots.get(snapshots.size()-2).eraseStatusDeleted();
-        // snapshots.get(snapshots.size()-2).changeAllEntryStatus();
-        // Create and start the thread for event processing
         String contentOnRun[] = FileManager.getFolderContent(watcher.getDirectoryToWatchString());
         snapshots.add(new Snapshot(contentOnRun));
         snapshots.add(new Snapshot(snapshots.get(snapshots.size()-1)));
@@ -39,20 +34,20 @@ public class App{
                     snapshots.get(snapshots.size()-2).eraseStatusDeleted();
                     snapshots.get(snapshots.size()-2).changeAllEntryStatus();
 
-                    snapshots.add(new Snapshot(snapshots.get(snapshots.size()-1)));
-                    // eventProcessingThread.start();
+                    snapshots.add(snapshots.get(snapshots.size()-1));
                 }
                 if(userInput.startsWith("info")){
                     String filename = "";
                     int startIndex = userInput.indexOf("<");
                     if(startIndex==-1){
                         System.out.println("Invalid format - correct format info <filename>");
-                        continue;
                     }
-                    for (int i = startIndex+1; i < userInput.indexOf(">"); i++) {
-                        filename += userInput.charAt(i);
+                    else{
+                        for (int i = startIndex+1; i < userInput.indexOf(">"); i++) {
+                            filename += userInput.charAt(i);
+                        }
+                        FileManager.printFileInfo(filename+".", watcher.getDirectoryToWatchString());
                     }
-                    FileInfo.printFileInfo(filename, watcher.getDirectoryToWatchString());
                     
                 }
                 else if (userInput.equals("exit")) {

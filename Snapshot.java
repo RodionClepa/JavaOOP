@@ -9,7 +9,6 @@ public class Snapshot {
     public Snapshot(Snapshot latestSnapshot){
         this.fileStatusEntries = new ArrayList<>(latestSnapshot.fileStatusEntries);
         this.createdTimestamp = null;
-        setAllFileInPrevSnapshot();
     }
 
     public Snapshot(String [] content){
@@ -42,9 +41,8 @@ public class Snapshot {
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             FileStatusEntry fileEntry = fileStatusEntries.get(i);
             if(fileEntry.getFilename().equals(filename)){
-                if(status.equals("Deleted") && !fileEntry.getIsInPreviousSnapshot()){
+                if(status.equals("Deleted")){
                     fileStatusEntries.remove(i);
-                    System.out.println("Worked delete");
                 }
                 else{
                     fileEntry.changeStatus(status);
@@ -60,13 +58,11 @@ public class Snapshot {
         }
     }
 
-    private void setAllFileInPrevSnapshot(){
-        for (int i = 0; i < fileStatusEntries.size(); i++) {
-            fileStatusEntries.get(i).changeIsInPreviousSnapshot();
-        }
+
+
+    public LocalDateTime getCreatedTimestamp() {
+        return createdTimestamp;
     }
-
-
     public void addTimestamp(){
         this.createdTimestamp = LocalDateTime.now();
     }
@@ -76,7 +72,6 @@ public class Snapshot {
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             tempFileName = fileStatusEntries.get(i).getFilename();
             if(tempFileName.equals(filename)){
-                System.out.println("Coindence: "+ tempFileName+" "+filename);
                 return true;
             }
         }
