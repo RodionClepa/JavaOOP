@@ -1,13 +1,19 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Snapshot {
-    private List<FileStatusEntry> fileStatusEntries;
+    public List<FileStatusEntry> fileStatusEntries;
     private LocalDateTime createdTimestamp;
 
     public Snapshot(Snapshot latestSnapshot){
-        this.fileStatusEntries = new ArrayList<>(latestSnapshot.fileStatusEntries);
+        this.fileStatusEntries = new ArrayList<>();
+        FileStatusEntry fileTemp;
+        for (int i = 0; i < latestSnapshot.fileStatusEntries.size(); i++) {
+            fileTemp = latestSnapshot.fileStatusEntries.get(i);
+            this.fileStatusEntries.add(new FileStatusEntry(fileTemp.getFilename(), fileTemp.getStatus(), fileTemp.getUpdatedTime()));
+        }
         this.createdTimestamp = null;
     }
 
@@ -41,13 +47,17 @@ public class Snapshot {
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             FileStatusEntry fileEntry = fileStatusEntries.get(i);
             if(fileEntry.getFilename().equals(filename)){
-                if(status.equals("Deleted")){
-                    fileStatusEntries.remove(i);
-                }
-                else{
-                    fileEntry.changeStatus(status);
-                }
+                fileEntry.changeStatus(status);
                 break;
+            }
+        }
+    }
+    public void removeFileByName(String filename){
+        Iterator<FileStatusEntry> iterator = fileStatusEntries.iterator();
+        while (iterator.hasNext()) {
+            FileStatusEntry fileEntry = iterator.next();
+            if (fileEntry.getFilename().equals(filename)) {
+                iterator.remove();
             }
         }
     }
@@ -78,10 +88,23 @@ public class Snapshot {
         return false;
     }
     public void eraseStatusDeleted(){
-        for (int i = 0; i < fileStatusEntries.size(); i++) {
-            if(fileStatusEntries.get(i).getStatus().equals("Deleted")){
-                fileStatusEntries.remove(i);
+        Iterator<FileStatusEntry> iterator = fileStatusEntries.iterator();
+        while (iterator.hasNext()) {
+            FileStatusEntry entry = iterator.next();
+            if (entry.getStatus().equals("Deleted")) {
+                iterator.remove();
             }
         }
+        
+    }
+    public String getStatusByFilename(String filename){
+        String tempFileName;
+        for (int i = 0; i < fileStatusEntries.size(); i++) {
+            tempFileName = fileStatusEntries.get(i).getFilename();
+            if(tempFileName.equals(filename)){
+                return fileStatusEntries.get(i).getStatus();
+            }
+        }
+        return "No such file";
     }
 }

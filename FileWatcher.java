@@ -36,8 +36,8 @@ public class FileWatcher {
         Snapshot prevSnapshot;
         while(true){
             // It is neccesary for keep eye track on changes like commit and to get 2 last 
-            prevSnapshot = snapshots.get(snapshots.size() - 2);
-            latestSnapshot = snapshots.get(snapshots.size()-1);
+            // prevSnapshot = snapshots.get(snapshots.size() - 2);
+            // latestSnapshot = snapshots.get(snapshots.size()-1);
             
             try {
                 key = watcher.take();
@@ -51,13 +51,26 @@ public class FileWatcher {
             for (WatchEvent<?> event : events) {
                 WatchEvent.Kind<?> kind = event.kind();
                 Path context = (Path) event.context();
+                String contextString = context.toString();
+
+                prevSnapshot = snapshots.get(snapshots.size() - 2);
+                latestSnapshot = snapshots.get(snapshots.size()-1);
 
                 // Handle different event types
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-                    latestSnapshot.addNewEntry("Created", context.toString());
+                    latestSnapshot.addNewEntry("Created", contextString);
+                    System.out.println("Created");
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-                    latestSnapshot.changeEntryStatus("Deleted", context.toString());
+                    System.out.println("Deleted");
+                    if(prevSnapshot.checkIfFileIsInSnapshot(contextString)){
+                        latestSnapshot.changeEntryStatus("Deleted", contextString);
+                    }
+                    else{
+                        latestSnapshot.removeFileByName(contextString);
+                    }
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+                    // Compare File created and modified in the same with last snapshot
+                    System.out.println("Changed");
                     try {
                         Path path = Paths.get(directoryToWatch + "/" + context);
                         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
@@ -65,8 +78,8 @@ public class FileWatcher {
                         ZoneId zoneId = ZoneId.systemDefault();
                         ZoneOffset currentZoneOffset = zoneId.getRules().getOffset(Instant.now());
                         FileTime prevSnapshotCreatedTime = FileTime.from(prevSnapshot.getCreatedTimestamp().toInstant(currentZoneOffset));
-                        if (creationTime.compareTo(prevSnapshotCreatedTime) < 0 && prevSnapshot.checkIfFileIsInSnapshot(context.toString())) {
-                            latestSnapshot.changeEntryStatus("Changed", context.toString());
+                        if (creationTime.compareTo(prevSnapshotCreatedTime) < 0 && prevSnapshot.checkIfFileIsInSnapshot(contextString) && prevSnapshot.getStatusByFilename(contextString) != "Deleted") {
+                            latestSnapshot.changeEntryStatus("Changed", contextString);
                         }
                     } catch (Exception e) {
                         System.out.println("Error: problem with reading file");

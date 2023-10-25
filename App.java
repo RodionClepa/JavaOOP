@@ -29,12 +29,14 @@ public class App{
                 if(userInput.equals("commit")){
                     snapshots.get(snapshots.size()-1).addTimestamp();
                     snapshots.get(snapshots.size()-1).printAllFileStatusEntry();
+
+                    snapshots.add(new Snapshot(snapshots.get(snapshots.size()-1)));
+
                     snapshots.get(snapshots.size()-1).eraseStatusDeleted();
                     snapshots.get(snapshots.size()-1).changeAllEntryStatus();
-                    snapshots.get(snapshots.size()-2).eraseStatusDeleted();
-                    snapshots.get(snapshots.size()-2).changeAllEntryStatus();
-
-                    snapshots.add(snapshots.get(snapshots.size()-1));
+                    
+                    System.out.println("New commit");
+                    snapshots.get(snapshots.size()-1).printAllFileStatusEntry();
                 }
                 if(userInput.startsWith("info")){
                     String filename = "";
@@ -46,9 +48,15 @@ public class App{
                         for (int i = startIndex+1; i < userInput.indexOf(">"); i++) {
                             filename += userInput.charAt(i);
                         }
-                        FileManager.printFileInfo(filename+".", watcher.getDirectoryToWatchString());
+                        FileManager.printFileInfo(filename, watcher.getDirectoryToWatchString());
                     }
                     
+                }
+                else if(userInput.startsWith("logs")){
+                    System.out.println("Print all snapshots");
+                    for (int i = 0; i < snapshots.size(); i++) {
+                        snapshots.get(i).printAllFileStatusEntry();
+                    }
                 }
                 else if (userInput.equals("exit")) {
                     System.exit(0);

@@ -25,6 +25,9 @@ public class FileStatusEntry {
     public String getUpdatedTimeString(){
         return this.updatedTime.toString();
     }
+    public LocalDateTime getUpdatedTime(){
+        return this.updatedTime;
+    }
 
     public void changeStatus(String status){
         this.status = status;
