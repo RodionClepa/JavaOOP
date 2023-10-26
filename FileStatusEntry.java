@@ -1,32 +1,17 @@
-import java.time.LocalDateTime;
 
 public class FileStatusEntry {
     private String filename;
     private String status;
-    private LocalDateTime updatedTime;
 
     public FileStatusEntry(String filename, String status){
         this.filename = filename;
         this.status = status;
-        this.updatedTime = LocalDateTime.now();
-    }
-
-    public FileStatusEntry(String filename, String status, LocalDateTime updatedTime){
-        this.filename = filename;
-        this.status = status;
-        this.updatedTime = updatedTime;
     }
     public String getFilename(){
         return this.filename;
     }
     public String getStatus(){
         return this.status;
-    }
-    public String getUpdatedTimeString(){
-        return this.updatedTime.toString();
-    }
-    public LocalDateTime getUpdatedTime(){
-        return this.updatedTime;
     }
 
     public void changeStatus(String status){
@@ -36,6 +21,7 @@ public class FileStatusEntry {
 
     @Override
     public String toString(){
-        return filename+" "+status+" "+updatedTime.toString();
+        String logFormat = "%-20s - %-30s %n";
+        return String.format(logFormat, this.filename, this.status);
     }
 }

@@ -3,38 +3,39 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Snapshot {
-    public List<FileStatusEntry> fileStatusEntries;
+public class Commit {
+    private List<FileStatusEntry> fileStatusEntries;
     private LocalDateTime createdTimestamp;
 
-    public Snapshot(Snapshot latestSnapshot){
+    public Commit(Commit lastCommit){
         this.fileStatusEntries = new ArrayList<>();
-        FileStatusEntry fileTemp;
-        for (int i = 0; i < latestSnapshot.fileStatusEntries.size(); i++) {
-            fileTemp = latestSnapshot.fileStatusEntries.get(i);
-            this.fileStatusEntries.add(new FileStatusEntry(fileTemp.getFilename(), fileTemp.getStatus(), fileTemp.getUpdatedTime()));
+        for (FileStatusEntry entry : lastCommit.fileStatusEntries) {
+            this.fileStatusEntries.add(new FileStatusEntry(entry.getFilename(), entry.getStatus()));
         }
         this.createdTimestamp = null;
+        // To remove unnecessary files
+        this.eraseStatusDeleted();
+        // To make rest of files 'No Change'
+        this.clearAllEntryStatus();
     }
 
-    public Snapshot(String [] content){
+    public Commit(String [] content){
         this.fileStatusEntries = new ArrayList<>();
         this.createdTimestamp = LocalDateTime.now();
-        System.out.println("Initial snapshot");
         for (int i = 0; i < content.length; i++) {
-            fileStatusEntries.add(new FileStatusEntry(content[i], "No Change", createdTimestamp));
+            fileStatusEntries.add(new FileStatusEntry(content[i], "No Change"));
         }
+        System.out.println("Initial snapshot");
         printAllFileStatusEntry();
     }
 
     public void printAllFileStatusEntry(){
-        String logFormat = "%-20s - %-25s %s%n";
         FileStatusEntry file;
         System.out.println("---------------------------------------------------------------");
         System.out.println("Created Snapshot at: " + createdTimestamp);
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             file = fileStatusEntries.get(i);
-            System.out.print(String.format(logFormat, file.getFilename(), file.getStatus(), file.getUpdatedTimeString()));
+            System.out.print(file.toString());
         }
         System.out.println("---------------------------------------------------------------");
     }
@@ -62,7 +63,7 @@ public class Snapshot {
         }
     }
 
-    public void changeAllEntryStatus(){
+    public void clearAllEntryStatus(){
         for (int i = 0; i < fileStatusEntries.size(); i++) {
             fileStatusEntries.get(i).changeStatus("No Change");
         }
@@ -106,5 +107,8 @@ public class Snapshot {
             }
         }
         return "No such file";
+    }
+    public List<FileStatusEntry> getFileStatusEntries() {
+        return fileStatusEntries;
     }
 }

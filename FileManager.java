@@ -1,7 +1,8 @@
 import java.io.File;
 
 import FileInspector.FileInfoImage;
-import FileInspector.FileInfoPyJava;
+import FileInspector.FileInfoJava;
+import FileInspector.FileInfoPython;
 import FileInspector.FileInfoTxt;
 
 public class FileManager {
@@ -22,9 +23,14 @@ public class FileManager {
         return lowerCasePath.endsWith(".txt");
     }
 
-    private static boolean isPyJava(String filePathString){
+    private static boolean isPy(String filePathString){
         String lowerCasePath = filePathString.toLowerCase();
-        return lowerCasePath.endsWith(".py") || lowerCasePath.endsWith(".java");
+        return lowerCasePath.endsWith(".py");
+    }
+
+    private static boolean isJava(String filePathString){
+        String lowerCasePath = filePathString.toLowerCase();
+        return lowerCasePath.endsWith(".java");
     }
 
     public static void printFileInfo(String filename, String directoryPathString){
@@ -32,7 +38,8 @@ public class FileManager {
         String filePathString;
         FileInfoImage imageManager = new FileInfoImage();
         FileInfoTxt txtManager = new FileInfoTxt();
-        FileInfoPyJava pyJavaManager = new FileInfoPyJava();
+        FileInfoJava javaManager = new FileInfoJava();
+        FileInfoPython pyManager = new FileInfoPython();
 
         for (int i = 0; i < content.length; i++) {
             if(content[i].startsWith(filename+".")){
@@ -45,9 +52,11 @@ public class FileManager {
                 else if(isTxt(filePathString)){
                     txtManager.printInfo(filePathString);
                 }
-                else if(isPyJava(filePathString)){
-                    System.out.println("2222");
-                    pyJavaManager.printInfo(filePathString);
+                else if(isPy(filePathString)){
+                    pyManager.printInfo(filePathString);
+                }
+                else if(isJava(filePathString)){
+                    javaManager.printInfo(filePathString);
                 }
                 System.out.println("-------------------------------------");
             }
