@@ -15,7 +15,7 @@ public class StackThree {
     public void pushOperation(String element){
         try {
             Node newNode = new Node(Integer.parseInt(element));
-            newNode.prev = top;
+            newNode.pointNode = top;
             top = newNode;
         } catch (NumberFormatException e) {
             System.out.println("Invalid number format");
@@ -28,7 +28,7 @@ public class StackThree {
             System.out.println("Stack is empty!");
         }
         else{
-            top = top.prev;
+            top = top.pointNode;
         }
     }
 
@@ -40,12 +40,20 @@ public class StackThree {
             System.out.println(top.element);
         }
     }
+
+    public void printAll(){
+        Node currentNode = top;
+        while(currentNode!=null){
+            System.out.println(currentNode.element);
+            currentNode = currentNode.pointNode;
+        }
+    }
     public static void main(String[] args) {
-        StackOne stack = new StackOne();
+        StackThree stack = new StackThree();
         String cmd = "";
         Scanner scanner = new Scanner(System.in);
         while(!cmd.equals("0")){
-            System.out.println("1 - push, 2 - pop, 3 - peek, 0 - exit");
+            System.out.println("1 - push, 2 - pop, 3 - peek, 4 - print All,0 - exit");
             cmd = scanner.nextLine();
             if(cmd.equals("1")){
                 System.out.print("Enter the new integer: ");
@@ -57,6 +65,9 @@ public class StackThree {
             }
             else if(cmd.equals("3")){
                 stack.peekOperation();
+            }
+            else if(cmd.equals("4")){
+                stack.printAll();
             }
         }
         scanner.close();
