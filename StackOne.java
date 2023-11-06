@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class StackOne{
 
-    List<Integer> list;
+    private List<Integer> list;
 
     public StackOne(){
         this.list = new ArrayList<>();
@@ -14,16 +14,24 @@ public class StackOne{
         try {
             list.add(Integer.parseInt(element));
         } catch (NumberFormatException e) {
-            System.out.println("Invalod number format");
+            System.out.println("Invalid number format");
         }
     }
 
     public void peekOperation(){
-        System.out.println(list.get(list.size()-1));
+        try {
+            System.out.println(list.get(list.size()-1));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("List is empty");
+        }
     }
 
     public void popOperation(){
-        list.remove(list.size()-1);
+        try {
+            list.remove(list.size()-1);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("List is empty");
+        }
     }
 
     public static void main(String[] args) {
@@ -31,7 +39,7 @@ public class StackOne{
         String cmd = "";
         Scanner scanner = new Scanner(System.in);
         while(!cmd.equals("0")){
-            System.out.println("1 - push, 2 - pop, 3 - peek");
+            System.out.println("1 - push, 2 - pop, 3 - peek, 0 - exit");
             cmd = scanner.nextLine();
             if(cmd.equals("1")){
                 System.out.print("Enter the new integer: ");
