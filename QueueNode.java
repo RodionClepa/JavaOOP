@@ -1,34 +1,31 @@
 import java.util.Scanner;
 
-public class QueueArrayDown implements StackQueueInterface {
-    private int[] list;
-    private int capacity;
-    private int count;
+public class QueueNode implements StackQueueInterface {
+    private Node first;
+    int capacity;
+    int count;
 
-    public QueueArrayDown(String capacity){
+    public QueueNode(String capacity){
         try {
             this.capacity = Integer.parseInt(capacity);
-            this.list = new int[this.capacity];
-            this.count = this.capacity-1;
+            this.count = 0;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid number format");
+            System.out.println("Invalod number format");
             System.exit(0);
         }
     }
-    
     @Override
-    public boolean isFull(){
-        if(count == -1){
+    public boolean isEmpty(){
+        if(first==null){
             return true;
         }
         else{
             return false;
         }
     }
-
     @Override
-    public boolean isEmpty(){
-        if(count==capacity-1){
+    public boolean isFull(){
+        if(count==capacity){
             return true;
         }
         else{
@@ -42,57 +39,61 @@ public class QueueArrayDown implements StackQueueInterface {
         }
         else{
             try {
-                list[count]=Integer.parseInt(element);
-                count-=1;
+                Node newNode = new Node(Integer.parseInt(element));
+                if(first==null){
+                    first = newNode;
+                }
+                else{
+                    Node currentNode = first;
+                    while(currentNode.pointNode!=null){
+                        currentNode = currentNode.pointNode;
+                    }
+                    currentNode.pointNode = newNode;
+                }
+                count+=1;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number format");
+                return;
             }
         }
     }
     @Override
     public void popOperation(){
-        if(isEmpty()){
-            System.out.println("Queue is empty!");
+        if(first == null){
+            System.out.println("queue is empty!");
         }
         else{
-            for (int i = capacity-1; i > count+1; i--) {
-                list[i] = list[i-1];
-            }
-            count+=1;
+            first = first.pointNode;
+            count--;
         }
     }
     @Override
     public void peekOperation(){
-        if(isEmpty()){
+        if(first == null){
             System.out.println("queue is empty!");
         }
         else{
-            System.out.println(list[capacity-1]);
+            System.out.println(first.element);
         }
     }
     @Override
     public void printAll(){
-        if(isEmpty()){
-            System.out.println("queue is empty!");
-        }
-        else{
-            int i = capacity-1;
-            System.out.println("========================================================");
-            while(i!=count){
-                System.out.println(list[i]);
-                i-=1;
-            }
+        Node currentNode = first;
+        System.out.println("====================================");
+        while(currentNode!=null){
+            System.out.println(currentNode.element);
+            currentNode = currentNode.pointNode;
         }
     }
-
     public static void main(String[] args) {
-        String cmd = "";
+        String cmd;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the capacity: ");
         cmd = scanner.nextLine();
-        QueueArrayDown queue = new QueueArrayDown(cmd);
+        QueueNode queue = new QueueNode(cmd);
+        cmd = "";
         while(!cmd.equals("0")){
-            System.out.println("1 - push, 2 - pop, 3 - peek, 4 - print all, 0 - exit");
+            System.out.println("1 - push, 2 - pop, 3 - peek, 4 - print All,0 - exit");
             cmd = scanner.nextLine();
             if(cmd.equals("1")){
                 System.out.print("Enter the new integer: ");
