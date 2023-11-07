@@ -1,8 +1,8 @@
 public class Node {
-    int element;
+    Object element;
     Node pointNode;
 
-    public Node(int element){
+    public Node(Object element){
         this.element = element;
     }
 }

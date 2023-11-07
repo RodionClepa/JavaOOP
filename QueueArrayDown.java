@@ -1,19 +1,13 @@
-import java.util.Scanner;
 
 public class QueueArrayDown implements StackQueueInterface {
-    private int[] list;
+    private Object[] list;
     private int capacity;
     private int count;
 
-    public QueueArrayDown(String capacity){
-        try {
-            this.capacity = Integer.parseInt(capacity);
-            this.list = new int[this.capacity];
-            this.count = this.capacity-1;
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid number format");
-            System.exit(0);
-        }
+    public QueueArrayDown(int capacity){
+        this.capacity = capacity;
+        this.list = new Object[this.capacity];
+        this.count = this.capacity-1;
     }
     
     @Override
@@ -36,17 +30,13 @@ public class QueueArrayDown implements StackQueueInterface {
         }
     }
     @Override
-    public void pushOperation(String element){
+    public void pushOperation(Object element){
         if(isFull()){
             System.out.println("Not enough capacity!");
         }
         else{
-            try {
-                list[count]=Integer.parseInt(element);
-                count-=1;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format");
-            }
+            list[count]=element;
+            count-=1;
         }
     }
     @Override
@@ -83,32 +73,5 @@ public class QueueArrayDown implements StackQueueInterface {
                 i-=1;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        String cmd = "";
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the capacity: ");
-        cmd = scanner.nextLine();
-        QueueArrayDown queue = new QueueArrayDown(cmd);
-        while(!cmd.equals("0")){
-            System.out.println("1 - push, 2 - pop, 3 - peek, 4 - print all, 0 - exit");
-            cmd = scanner.nextLine();
-            if(cmd.equals("1")){
-                System.out.print("Enter the new integer: ");
-                cmd = scanner.nextLine();
-                queue.pushOperation(cmd);
-            }
-            else if(cmd.equals("2")){
-                queue.popOperation();
-            }
-            else if(cmd.equals("3")){
-                queue.peekOperation();
-            }
-            else if(cmd.equals("4")){
-                queue.printAll();
-            }
-        }
-        scanner.close();
     }
 }
