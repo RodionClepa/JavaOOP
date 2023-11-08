@@ -36,7 +36,7 @@ public class App {
                 dataStructure.popOperation();
             }
             else if(userInput.equals("3")){
-                dataStructure.peekOperation();
+                System.out.println(dataStructure.peekOperation());
             }
             else if(userInput.equals("4")){
                 dataStructure.printAll();

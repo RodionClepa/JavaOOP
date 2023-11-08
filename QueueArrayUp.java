@@ -50,12 +50,13 @@ public class QueueArrayUp implements StackQueueInterface {
         }
     }
     @Override
-    public void peekOperation(){
+    public Object peekOperation(){
         if(isEmpty()){
             System.out.println("queue is empty!");
+            return null;
         }
         else{
-            System.out.println(list[0]);
+            return list[0];
         }
     }
     @Override

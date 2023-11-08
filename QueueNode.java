@@ -62,12 +62,13 @@ public class QueueNode implements StackQueueInterface {
         }
     }
     @Override
-    public void peekOperation(){
+    public Object peekOperation(){
         if(first == null){
             System.out.println("queue is empty!");
+            return null;
         }
         else{
-            System.out.println(first.element);
+            return first.element;
         }
     }
     @Override

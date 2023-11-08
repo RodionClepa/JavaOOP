@@ -52,12 +52,13 @@ public class QueueArrayDown implements StackQueueInterface {
         }
     }
     @Override
-    public void peekOperation(){
+    public Object peekOperation(){
         if(isEmpty()){
             System.out.println("queue is empty!");
+            return null;
         }
         else{
-            System.out.println(list[capacity-1]);
+            return list[capacity-1];
         }
     }
     @Override

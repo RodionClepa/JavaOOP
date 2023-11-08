@@ -48,12 +48,13 @@ public class StackArrayUp implements StackQueueInterface {
         }
     }
     @Override
-    public void peekOperation(){
+    public Object peekOperation(){
         if(isEmpty()){
             System.out.println("Stack is empty!");
+            return null;
         }
         else{
-            System.out.println(list[count-1]);
+            return list[count-1];
         }
     }
     @Override
